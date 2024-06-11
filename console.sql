@@ -1,6 +1,13 @@
-### ¿Cuáles son los identificadores y nombres de todos los proyectos existentes en la empresa?
-SELECT IDProyecto, NombreProyecto
-FROM Proyecto;
+# ¿Cuál es el total de ventas realizadas en el año 2009?
+SELECT SUM(Total_Venta) AS Total_Ventas_2009
+FROM (
+SELECT CONVERT(DECIMAL(10,2), SUM(Precio_Unitario * Cantidad * (1 - Descuento))) AS Total_Venta
+FROM FACTURA F
+INNER JOIN DETALLE_FACTURA DF ON F.Numero_Factura = DF.Numero_Factura
+WHERE YEAR(Fecha_Factura) = 2009
+GROUP BY F.Numero_Factura
+) AS Ventas_2009;
+
 
 ###¿Cuáles son los proyectos que se desarrollan en 'CHICAGO'?
 SELECT IDProyecto, NombreProyecto
